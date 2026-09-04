@@ -8,8 +8,9 @@ class RandomOrgStrategy extends RandomNumberStrategy {
   async generate(count, min, max) {
     const url = `https://www.random.org/integers/?num=${count}&min=${min}&max=${max}&col=1&base=10&format=plain&rnd=new`;
 
+    // Timeout ekleyerek mobil cihazlarda sonsuz beklemeyi önlüyoruz
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000);
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 saniye sonra iptal et
 
     const response = await fetch(url, {
       method: 'GET',
@@ -57,6 +58,8 @@ class RandomNumberService {
     try {
       return await this.strategy.generate(count, min, max);
     } catch (error) {
+      // EĞER API HATASI ALINIRSA (Mobil engelleme, Timeout vb.)
+      // Otomatik olarak Yerel Stratejiye geçiş yap ve tekrar dene
       if (this.strategy instanceof RandomOrgStrategy) {
         this.setStrategy(new LocalRandomStrategy());
         return await this.strategy.generate(count, min, max);
