@@ -8,10 +8,16 @@ class RandomOrgStrategy extends RandomNumberStrategy {
   async generate(count, min, max) {
     const url = `https://www.random.org/integers/?num=${count}&min=${min}&max=${max}&col=1&base=10&format=plain&rnd=new`;
 
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
+
     const response = await fetch(url, {
       method: 'GET',
-      headers: { 'Accept': 'text/plain' }
+      headers: { 'Accept': 'text/plain' },
+      signal: controller.signal
     });
+
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       throw new Error(`API Hatası: ${response.status}`);
@@ -51,6 +57,10 @@ class RandomNumberService {
     try {
       return await this.strategy.generate(count, min, max);
     } catch (error) {
+      if (this.strategy instanceof RandomOrgStrategy) {
+        this.setStrategy(new LocalRandomStrategy());
+        return await this.strategy.generate(count, min, max);
+      }
       return null;
     }
   }
