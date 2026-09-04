@@ -36,3 +36,28 @@ class LocalRandomStrategy extends RandomNumberStrategy {
       Math.floor(Math.random() * (max - min + 1)) + min
     );
   }
+}
+
+class RandomNumberService {
+  constructor(strategy) {
+    this.strategy = strategy;
+  }
+
+  setStrategy(strategy) {
+    this.strategy = strategy;
+  }
+
+  async getRandomNumbers(count = 10, min = 1, max = 4) {
+    try {
+      return await this.strategy.generate(count, min, max);
+    } catch (error) {
+      return null;
+    }
+  }
+}
+
+const randomService = new RandomNumberService(new RandomOrgStrategy());
+
+async function generateRandomNumbers(count, min, max) {
+  return await randomService.getRandomNumbers(count, min, max);
+}
