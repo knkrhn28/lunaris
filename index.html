@@ -54,7 +54,6 @@
       max-height: 220px;
       border-radius: 12px;
       object-fit: contain;
-      transition: transform 0.3s ease;
     }
 
     button {
@@ -115,7 +114,9 @@
     Her tıklamada farklı komik GIF + gerçek rastgele sayılar
   </div>
 
+  <!-- Önce JS dosyasını yüklüyoruz ki generateRandomNumbers fonksiyonu tanımlansın -->
   <script src="random-1-4.js"></script>
+  
   <script>
     const gifs = [
       "https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif",
@@ -140,6 +141,7 @@
       const sonucDiv = document.getElementById('sonuc');
       sonucDiv.textContent = 'Üretiliyor...';
       
+      // random-1-4.js içindeki global köprü fonksiyonu çağırıyoruz
       const sayilar = await generateRandomNumbers(10, 1, 4);
       
       if (sayilar) {
