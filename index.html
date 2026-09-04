@@ -7,44 +7,99 @@
   <style>
     body {
       font-family: system-ui, sans-serif;
-      max-width: 600px;
-      margin: 50px auto;
+      max-width: 620px;
+      margin: 40px auto;
       padding: 20px;
       text-align: center;
       background: #f5f5f5;
     }
+    h1 {
+      margin-bottom: 6px;
+    }
+    .gif-container {
+      margin: 25px 0;
+      min-height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .gif-container img {
+      max-width: 300px;
+      max-height: 220px;
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      object-fit: contain;
+    }
     button {
-      padding: 12px 28px;
+      padding: 14px 36px;
       font-size: 18px;
       background: #2563eb;
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
+      transition: all 0.2s;
     }
     button:hover {
       background: #1d4ed8;
+      transform: translateY(-1px);
     }
     #sonuc {
       margin-top: 30px;
-      font-size: 28px;
+      font-size: 32px;
       font-weight: bold;
-      letter-spacing: 4px;
-      min-height: 40px;
+      letter-spacing: 6px;
+      min-height: 50px;
+      color: #111;
+    }
+    .info {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #666;
     }
   </style>
 </head>
 <body>
-  <h1>1-4 Arası Gerçek Rastgele Sayı</h1>
   <p>Lunaris (lu-na-ris): Kurallarla yönetilen bu dünyada, plansızlığın ve spontaneliğin getirdiği o ani özgürlük hissi.</p>
+
+  <div class="gif-container">
+    <img id="randomGif" src="" alt="Rastgele GIF yükleniyor...">
+  </div>
 
   <button onclick="uret()">10 Sayı Üret</button>
 
   <div id="sonuc">—</div>
 
+  <div class="info">
+    Her tıklamada farklı komik GIF + gerçek rastgele sayılar
+  </div>
+
   <script src="random-1-4.js"></script>
   <script>
+    // Komik rastgelelik / zar / kaos GIF'leri
+    const gifs = [
+      "https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif",          // klasik zar
+      "https://media.giphy.com/media/3o7TKz2eMXx7dn0xO0/giphy.gif",          // dönen zarlar
+      "https://media.giphy.com/media/26BRv0Thzu0kgwIuQ/giphy.gif",          // kaos sayılar
+      "https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif",         // matrix sayılar
+      "https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif",         // zar yağmuru
+      "https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif",          // şanslı zar
+      "https://media.giphy.com/media/3orieYsB0tQfYuG0yY/giphy.gif",         // d20 zar
+      "https://media.giphy.com/media/xUA7aM09ByyR1w5YWc/giphy.gif",         // komik zar atışı
+      "https://media.giphy.com/media/26ufcVAuq4n3om1q0/giphy.gif",          // random chaos
+      "https://media.giphy.com/media/3oEjI6SIIHBdRxXI9a/giphy.gif"          // kafa karıştırıcı sayılar
+    ];
+
+    // Sayfa açıldığında rastgele bir GIF göster
+    function rastgeleGifGoster() {
+      const rastgeleIndex = Math.floor(Math.random() * gifs.length);
+      document.getElementById('randomGif').src = gifs[rastgeleIndex];
+    }
+
+    // Sayı üretirken de GIF değiştir
     async function uret() {
+      rastgeleGifGoster(); // her tıklamada yeni GIF
+
       const sonucDiv = document.getElementById('sonuc');
       sonucDiv.textContent = 'Üretiliyor...';
       
@@ -56,6 +111,9 @@
         sonucDiv.textContent = 'Hata oluştu, tekrar dene';
       }
     }
+
+    // Sayfa yüklendiğinde ilk GIF'i göster
+    window.onload = rastgeleGifGoster;
   </script>
 </body>
 </html>
