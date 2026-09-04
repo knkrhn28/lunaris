@@ -5,57 +5,98 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lunaris</title>
   <style>
+    :root {
+      --primary-color: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg-color: #f8fafc;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --card-bg: #ffffff;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    }
+
     body {
-      font-family: system-ui, sans-serif;
-      max-width: 620px;
-      margin: 40px auto;
-      padding: 20px;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 60px 20px;
       text-align: center;
-      background: #f5f5f5;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
     }
-    h1 {
-      margin-bottom: 6px;
+
+    p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      font-style: italic;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
     }
+
     .gif-container {
-      margin: 25px 0;
-      min-height: 220px;
+      margin: 0 auto 40px;
+      min-height: 240px;
       display: flex;
       align-items: center;
       justify-content: center;
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      width: fit-content;
     }
+
     .gif-container img {
-      max-width: 300px;
+      max-width: 100%;
       max-height: 220px;
-      border-radius: 14px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      border-radius: 12px;
       object-fit: contain;
+      transition: transform 0.3s ease;
     }
+
     button {
-      padding: 14px 36px;
+      padding: 16px 40px;
       font-size: 18px;
-      background: #2563eb;
+      font-weight: 600;
+      background: var(--primary-color);
       color: white;
       border: none;
-      border-radius: 10px;
+      border-radius: 14px;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
     }
+
     button:hover {
-      background: #1d4ed8;
-      transform: translateY(-1px);
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
     }
+
+    button:active {
+      transform: translateY(0);
+    }
+
     #sonuc {
-      margin-top: 30px;
-      font-size: 32px;
-      font-weight: bold;
-      letter-spacing: 6px;
-      min-height: 50px;
-      color: #111;
-    }
-    .info {
       margin-top: 40px;
-      font-size: 14px;
-      color: #666;
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: 8px;
+      min-height: 60px;
+      color: var(--text-main);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .info {
+      margin-top: 60px;
+      font-size: 13px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0.8;
     }
   </style>
 </head>
@@ -76,30 +117,26 @@
 
   <script src="random-1-4.js"></script>
   <script>
-    // Komik rastgelelik / zar / kaos GIF'leri
     const gifs = [
-      "https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif",          // klasik zar
-      "https://media.giphy.com/media/3o7TKz2eMXx7dn0xO0/giphy.gif",          // dönen zarlar
-      "https://media.giphy.com/media/26BRv0Thzu0kgwIuQ/giphy.gif",          // kaos sayılar
-      "https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif",         // matrix sayılar
-      "https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif",         // zar yağmuru
-      "https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif",          // şanslı zar
-      "https://media.giphy.com/media/3orieYsB0tQfYuG0yY/giphy.gif",         // d20 zar
-      "https://media.giphy.com/media/xUA7aM09ByyR1w5YWc/giphy.gif",         // komik zar atışı
-      "https://media.giphy.com/media/26ufcVAuq4n3om1q0/giphy.gif",          // random chaos
-      "https://media.giphy.com/media/3oEjI6SIIHBdRxXI9a/giphy.gif"          // kafa karıştırıcı sayılar
+      "https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif",
+      "https://media.giphy.com/media/3o7TKz2eMXx7dn0xO0/giphy.gif",
+      "https://media.giphy.com/media/26BRv0Thzu0kgwIuQ/giphy.gif",
+      "https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif",
+      "https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif",
+      "https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif",
+      "https://media.giphy.com/media/3orieYsB0tQfYuG0yY/giphy.gif",
+      "https://media.giphy.com/media/xUA7aM09ByyR1w5YWc/giphy.gif",
+      "https://media.giphy.com/media/26ufcVAuq4n3om1q0/giphy.gif",
+      "https://media.giphy.com/media/3oEjI6SIIHBdRxXI9a/giphy.gif"
     ];
 
-    // Sayfa açıldığında rastgele bir GIF göster
     function rastgeleGifGoster() {
       const rastgeleIndex = Math.floor(Math.random() * gifs.length);
       document.getElementById('randomGif').src = gifs[rastgeleIndex];
     }
 
-    // Sayı üretirken de GIF değiştir
     async function uret() {
-      rastgeleGifGoster(); // her tıklamada yeni GIF
-
+      rastgeleGifGoster();
       const sonucDiv = document.getElementById('sonuc');
       sonucDiv.textContent = 'Üretiliyor...';
       
@@ -112,7 +149,6 @@
       }
     }
 
-    // Sayfa yüklendiğinde ilk GIF'i göster
     window.onload = rastgeleGifGoster;
   </script>
 </body>
